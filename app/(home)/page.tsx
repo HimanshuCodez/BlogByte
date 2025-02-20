@@ -1,3 +1,4 @@
+import BlogFooter from "@/components/home/blog-footer";
 import Navbar from "@/components/home/header/navbar";
 import HeroSection from "@/components/home/hero-section";
 import TopArticles from "@/components/home/top-articles";
@@ -12,7 +13,7 @@ export default function Home() {
       <section className="relative py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mv-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-xl">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
               Featured Articles
             </h2>
             <p>Discover our most popular and trending content </p>
@@ -25,6 +26,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      <BlogFooter/>
     </div>
   );
 }
