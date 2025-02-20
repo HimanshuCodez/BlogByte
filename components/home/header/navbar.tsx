@@ -1,10 +1,13 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../../ui/button";
 import SearchInput from "./search";
 import ToggleMode from "./toggleMode";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className=" container mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,6 +59,18 @@ const Navbar = () => {
               <Button>Signup</Button>
             </div>
           </div>
+          {/* mobile menu */}
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="md:hidden text-muted-foreground hover:text-foreground "
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5 " />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </Button>
         </div>
       </div>
     </div>
