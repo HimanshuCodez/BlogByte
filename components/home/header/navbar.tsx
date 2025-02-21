@@ -1,10 +1,17 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import SearchInput from "./search";
 import ToggleMode from "./toggleMode";
 import { Menu, X } from "lucide-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,10 +62,22 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <SearchInput />
             <ToggleMode />
-            <div className="hidden items-center gap-2 md:flex">
-              <Button>Login</Button>
-              <Button>Signup</Button>
-            </div>
+{/* if signed in show user profile */}
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+
+{/* if signout show login signup div */}
+            <SignedOut>
+              <div className="hidden items-center gap-2 md:flex">
+                <SignInButton>
+                  <Button variant={"outline"}>Login</Button>
+                </SignInButton>
+                <SignUpButton>         
+                  <Button>Signup</Button>
+                </SignUpButton>
+              </div>
+            </SignedOut>
           </div>
           {/* mobile menu button */}
           <Button
