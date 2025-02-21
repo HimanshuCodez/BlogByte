@@ -62,18 +62,18 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <SearchInput />
             <ToggleMode />
-{/* if signed in show user profile */}
+            {/* if signed in show user profile */}
             <SignedIn>
               <UserButton />
             </SignedIn>
 
-{/* if signout show login signup div */}
+            {/* if signout show login signup div */}
             <SignedOut>
               <div className="hidden items-center gap-2 md:flex">
                 <SignInButton>
                   <Button variant={"outline"}>Login</Button>
                 </SignInButton>
-                <SignUpButton>         
+                <SignUpButton>
                   <Button>Signup</Button>
                 </SignUpButton>
               </div>
