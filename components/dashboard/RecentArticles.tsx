@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 
 import {
-    Table,
+  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 const RecentArticles = () => {
   return (
@@ -28,8 +29,8 @@ const RecentArticles = () => {
         </div>
       </CardHeader>
       <CardContent>
-    <Table>
-             <TableHeader>
+        <Table>
+          <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
               <TableHead>Status</TableHead>
@@ -40,17 +41,43 @@ const RecentArticles = () => {
           </TableHeader>
           <TableBody>
             <TableRow>
+              <TableCell>title</TableCell>
               <TableCell>
-                <Badge variant={'secondary'} className="rounded-full bg-green-100 text-green-800">
+                <Badge
+                  variant={"secondary"}
+                  className="rounded-full bg-green-100 text-green-800"
+                >
                   Published
                 </Badge>
               </TableCell>
+              <TableCell>2</TableCell>
+              <TableCell>12 Feb </TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Link href={`/dashboard/articles/${123}/edit`}>
+                    <Button variant={"ghost"} size={"sm"}>
+                      Edit
+                    </Button>
+                  </Link>
+                  <DeleteButton />
+                </div>
+              </TableCell>
             </TableRow>
           </TableBody>
-          </Table> 
+        </Table>
       </CardContent>
     </Card>
   );
 };
 
 export default RecentArticles;
+
+const DeleteButton = () => {
+  return (
+    <form>
+      <Button variant={"ghost"} size={"sm"} type="submit" className="ml-2">
+        Delete
+      </Button>
+    </form>
+  );
+};
