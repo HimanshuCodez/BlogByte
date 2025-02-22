@@ -1,8 +1,9 @@
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { FileText, MessageCircle, PlusCircle } from "lucide-react";
+import { FileText, MessageCircle, PlusCircle, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import RecentArticles from "./RecentArticles";
 
 const BlogDashboard = () => {
   return (
@@ -50,7 +51,7 @@ const BlogDashboard = () => {
             <CardTitle className="font-medium text-sm">
               Avg. Rating Time
             </CardTitle>
-            <MessageCircle className="w-4 h-4 " />
+            <Star className="w-4 h-4 " />
           </CardHeader>
           <CardContent>
             <div className=" text-2xl font-bold ">4.2</div>
@@ -58,6 +59,7 @@ const BlogDashboard = () => {
           </CardContent>
         </Card>
       </div>
+      <RecentArticles/>
     </main>
   );
 };
