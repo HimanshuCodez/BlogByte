@@ -38,7 +38,7 @@ const DashboardSideBar = () => {
     <div className="h-full px-4 py-6">
       <div className="flex items-center gap-2 mb-8 px-2">
         <Link href={"/"}>
-          <span className="text-xl font-bold">BlogByte</span>
+          <span className="text-xl font-bold">Blog Byte</span>
         </Link>
       </div>
       <nav>
@@ -48,7 +48,7 @@ const DashboardSideBar = () => {
             Overview
           </Button>
         </Link>
-        <Link href={"/dashboard"}>
+        <Link href={"/dashboard/articles/create"}>
           <Button variant={"ghost"} className="w-full  justify-start">
             <FileText className="h-5 w-5 mr-2" />
             Articles
