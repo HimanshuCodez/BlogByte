@@ -20,7 +20,7 @@ type createArticlesFormstate = {
     }
 }
 
-export const createArticle = async (prevState: createArticlesFormstate,formData: FormData): Promise<createArticlesFormstate> => {
+export const createArticle = async (prevState: createArticlesFormstate, formData: FormData): Promise<createArticlesFormstate> => {
     const result = createArticleSchema.safeParse({
         title: formData.get('title'),
         content: formData.get('content'),
@@ -41,5 +41,17 @@ export const createArticle = async (prevState: createArticlesFormstate,formData:
         }
 
     }
+    const imageFile = formData.get('featuredImage') as File | null
+    if (!imageFile || imageFile.name === 'undefined'){
+        return {
+            errors: {
+                featuredImage: ['You must select an image for the featured article']
+            }
+        }
+    }
+    const arrayBuffer = await imageFile.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+
+    const uploadResult 
     redirect("/dashboard")
 }
