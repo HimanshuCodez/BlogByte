@@ -2,7 +2,9 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
-import {v2 as cloudinary, UploadApiResponse} from 'cloudinary'
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary'
+import { prisma } from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -47,8 +49,18 @@ export const createArticle = async (prevState: createArticlesFormstate, formData
         }
 
     }
+    const existingUser = await prisma.user.findUnique({
+        where: { clerkUserId: userId },
+    })
+    if (!existingUser) {
+        return {
+            errors: {
+                formErrors: ['User not Found.Please Register before creating Article']
+            }
+        }
+    }
     const imageFile = formData.get('featuredImage') as File | null
-    if (!imageFile || imageFile.name === 'undefined'){
+    if (!imageFile || imageFile.name === 'undefined') {
         return {
             errors: {
                 featuredImage: ['You must select an image for the featured article']
@@ -58,8 +70,51 @@ export const createArticle = async (prevState: createArticlesFormstate, formData
     const arrayBuffer = await imageFile.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    const uploadResponse : UploadApiResponse | undefined = await new Promise((resolve,reject)=>{
-        
+    const uploadResponse: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream({
+            resource_type: 'auto'
+        }, (error, result) => {
+            if (error) reject(error)
+            else resolve(result)
+        }
+        )
+        uploadStream.end(buffer)
     })
+    const imageUrl = uploadResponse?.secure_url
+
+    if(!imageUrl){
+        return {
+            errors: {
+                featuredImage: ['Failed to upload image. Please try again.']
+            }
+        }
+    }
+
+    try {
+        await prisma.articles.create({
+            data: {
+                title: result.data.title,
+                content: result.data.content,
+                category: result.data.category,
+                featuredImage:imageUrl,
+                authorId:existingUser.id
+            }
+        })
+    } catch (error:unknown) {
+        if(error instanceof Error){
+            return {
+                errors: {
+                    formErrors: [error.message]
+                }
+            }
+        }else{
+            return {
+                errors:{
+                     formErrors:['Some Internal Error Occurred']
+                }
+            }
+        }
+    }
+    revalidatePath('/dashboard');
     redirect("/dashboard")
 }
