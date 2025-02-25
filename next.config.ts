@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
       protocol: 'https',
       hostname: 'in.pinterest.com',
     },
+    {
+      protocol: 'https',
+      hostname: 'res.cloudinary.com',
+    },
     ]
   }
 };
