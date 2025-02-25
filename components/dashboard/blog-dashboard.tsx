@@ -4,8 +4,27 @@ import { Button } from "../ui/button";
 import { FileText, MessageCircle, PlusCircle, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import RecentArticles from "./RecentArticles";
+import { prisma } from "@/lib/prisma";
 
-const BlogDashboard = () => {
+const BlogDashboard = async () => {
+  const [articles, totalComments] = await Promise.all([
+    prisma.articles.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        comments: true,
+        author: {
+          select: {
+            name: true,
+            email: true,
+            imageUrl: true,
+          },
+        },
+      },
+    }),
+    prisma.comment.count(),
+  ]);
   return (
     <main className="flex-1  md:p-8">
       <div className="flex justify-between items-center mb-8 ">
@@ -29,9 +48,11 @@ const BlogDashboard = () => {
             </CardTitle>
             <FileText className="w-4 h-4 " />
           </CardHeader>
-          <CardContent >
-            <div className=" text-2xl font-bold ">2</div>
-            <p className="text-sm text-muted-foreground mt-1">+5 from last month</p>
+          <CardContent>
+            <div className=" text-2xl font-bold ">{articles.length}</div>
+            <p className="text-sm text-muted-foreground mt-1">
+              +5 from last month
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -42,7 +63,7 @@ const BlogDashboard = () => {
             <MessageCircle className="w-4 h-4 " />
           </CardHeader>
           <CardContent>
-            <div className=" text-2xl font-bold ">2</div>
+            <div className=" text-2xl font-bold ">{totalComments}</div>
             <p className="text-sm text-muted-foreground mt-1">12 waiting</p>
           </CardContent>
         </Card>
@@ -55,11 +76,13 @@ const BlogDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className=" text-2xl font-bold ">4.2</div>
-            <p className="text-sm text-muted-foreground mt-1">+0.6 from last month</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              +0.6 from last month
+            </p>
           </CardContent>
         </Card>
       </div>
-      <RecentArticles/>
+      <RecentArticles articles={articles} />
     </main>
   );
 };
