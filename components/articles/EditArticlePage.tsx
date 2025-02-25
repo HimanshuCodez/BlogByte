@@ -1,5 +1,10 @@
 "use client";
-import React, { FormEvent, startTransition, useActionState, useState } from "react";
+import React, {
+  FormEvent,
+  startTransition,
+  useActionState,
+  useState,
+} from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -7,28 +12,31 @@ import "react-quill-new/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { Button } from "../ui/button";
 import { createArticle } from "@/actions/create-articles";
-import type{ Articles } from "@prisma/client";
-
+import type { Articles } from "@prisma/client";
+import { editArticle } from "@/actions/edit-articles";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 type EditArticleProps = {
-    article:Articles
-}
-const EditArticlesPage : React.FC<EditArticleProps> = ({article}) => {
-  const [content, setContent] = useState(" ");
-  const [formState, action, isPending] = useActionState(createArticle, {
-    errors: {},
-  });
-  const handleSubmit =async (e : FormEvent<HTMLFormElement>) => {
+  article: Articles;
+};
+const EditArticlesPage: React.FC<EditArticleProps> = ({ article }) => {
+  const [content, setContent] = useState(article.content);
+  const [formState, action, isPending] = useActionState(
+    editArticle.bind(null, article.id),
+    {
+      errors: {},
+    }
+  );
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
 
-    formData.append("content",content)
-    startTransition(()=>{
-      action(formData)
-    })
-  }
+    formData.append("content", content);
+    startTransition(() => {
+      action(formData);
+    });
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -53,7 +61,12 @@ const EditArticlesPage : React.FC<EditArticleProps> = ({article}) => {
             )}
             <div className="space-y-2">
               <Label>Category</Label>
-              <select className="flex h-10 w-full rounded-md" name="category" id="category"defaultValue={article.category}>
+              <select
+                className="flex h-10 w-full rounded-md"
+                name="category"
+                id="category"
+                defaultValue={article.category}
+              >
                 <option value="">Select a Category</option>
                 <option value="tech">Tech</option>
                 <option value="politics">Politics</option>
@@ -75,14 +88,15 @@ const EditArticlesPage : React.FC<EditArticleProps> = ({article}) => {
                 id="featuredImage"
                 accept="image/*"
               />
-              <div className="mb-4"> <img
-              src={article.featuredImage}
-              alt="featured image"
-              className="w-48 h-32  object-cover rounded-md"
-             
-              
-              /></div>
-             
+              <div className="mb-4">
+                {article.featuredImage && (
+                  <img
+                    src={article.featuredImage}
+                    alt="featured image"
+                    className="w-48 h-32  object-cover rounded-md"
+                  />
+                )}
+              </div>
             </div>
             <div className="space-y-2">
               <Label>Content</Label>
@@ -96,9 +110,8 @@ const EditArticlesPage : React.FC<EditArticleProps> = ({article}) => {
             <div className="flex justify-end gap-4">
               <Button variant={"outline"}>Cancel</Button>
               <Button type="submit" disabled={isPending}>
-              {isPending ? "loading..." : "Publish Article"}
+                {isPending ? "loading..." : "Edit Article"}
               </Button>
-              
             </div>
           </form>
         </CardContent>
