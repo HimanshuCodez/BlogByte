@@ -2,7 +2,13 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
+import {v2 as cloudinary, UploadApiResponse} from 'cloudinary'
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 const createArticleSchema = z.object({
     title: z.string().min(3).max(100),
     content: z.string().min(100),
@@ -52,6 +58,8 @@ export const createArticle = async (prevState: createArticlesFormstate, formData
     const arrayBuffer = await imageFile.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    const uploadResult 
+    const uploadResponse : UploadApiResponse | undefined = await new Promise((resolve,reject)=>{
+        
+    })
     redirect("/dashboard")
 }
