@@ -10,23 +10,34 @@ export default function Home() {
     <div>
       <Navbar />
       <HeroSection />
+
       <section className="relative py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="mv-12 text-center">
+          {/* Heading Section */}
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
               Featured Articles
             </h2>
-            <p>Discover our most popular and trending content </p>
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
+              Discover our most popular and trending content
+            </p>
+          </div>
+
+          {/* Articles Section */}
+          <TopArticles />
+
+          {/* View All Articles Button */}
+          <div className="mt-12 flex justify-center">
+            <Link href="/articles">
+              <Button className="rounded-full px-6 py-3 text-lg font-medium transition hover:bg-gray-900 hover:text-white dark:bg-white dark:hover:text-gray-900">
+                View All Articles
+              </Button>
+            </Link>
           </div>
         </div>
-        <TopArticles />
-        <div>
-          <Link href={"/articles"}>
-          <Button className="rounded-full hover:bg-gray-900 hover:text-white dark:bg-white dark:hover:text-gray-900">View All Articles</Button>
-          </Link>
-        </div>
       </section>
-      <BlogFooter/>
+
+      <BlogFooter />
     </div>
   );
 }
