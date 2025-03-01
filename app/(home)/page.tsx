@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/hero-section";
 import TopArticles from "@/components/home/top-articles";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -23,12 +24,28 @@ export default function Home() {
             </p>
           </div>
 
+          <Suspense
+            fallback={
+             
+                <div className="text-center flex flex-col items-center">
+                  {/* Spinner */}
+                  <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-500 dark:border-purple-400 mb-4"></div>
+
+                  {/* Loading Text */}
+                  <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+                    Loading...
+                  </h1>
+                </div>
+              
+            }
+          >
+            <TopArticles />
+          </Suspense>
           {/* Articles Section */}
-          <TopArticles />
 
           {/* View All Articles Button */}
           <div className="mt-12 flex justify-center">
-            <Link href="/articles">
+            <Link href="/articles/">
               <Button className="rounded-full px-6 py-3 text-lg font-medium transition hover:bg-gray-900 hover:text-white dark:bg-white dark:hover:text-gray-900">
                 View All Articles
               </Button>

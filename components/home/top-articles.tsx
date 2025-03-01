@@ -32,6 +32,7 @@ const TopArticles = async ()=> {
             "border border-gray-200/50 dark:border-white/10",
             "bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg"
           )}
+          
         >
           <div className="p-6">
             <Link href={`/articles/${article.id}`}>
