@@ -20,7 +20,7 @@ type SearchPageProps = {
 
 export function AllArticlesPage({ articles }: SearchPageProps) {
  
-  if (articles.length === 0) return <h1>no result</h1>;
+  if (!articles) return <h1>no result</h1>;
 
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

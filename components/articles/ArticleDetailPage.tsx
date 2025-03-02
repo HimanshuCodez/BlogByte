@@ -2,12 +2,12 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { MessageCircle } from "lucide-react";
 import { Prisma } from "@prisma/client";
-// import CommentForm from "../comments/comment-form";
-// import CommentList from "../comments/comment-list";
 import { prisma } from "@/lib/prisma"; 
 // import LikeButton from "./actions/like-button";
 import { auth } from "@clerk/nextjs/server";
 import LikeButton from "./LikeButton";
+import CommentForm from "../comment/CommentForm";
+import CommentList from "../comment/CommentList";
 
 type ArticleDetailPageProps = {
   article: Prisma.ArticlesGetPayload<{
@@ -99,11 +99,11 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
               </h2>
             </div>
 
-            {/* Comment Form
-            <CommentForm articleId={article.id} />
+           {/* Comment Form*/}
+            <CommentForm articleId={article.id} /> 
 
             {/* Comments List */}
-            {/* <CommentList comments={comments} /> */} 
+            <CommentList comments={comments} /> 
           </Card>
         </article>
       </main>
