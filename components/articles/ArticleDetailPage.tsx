@@ -88,7 +88,7 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
           />
 
           {/* Article Actions */}
-          {/* <LikeButton articleId={article.id} likes={likes} isLiked = {isLiked}/> */}
+          <LikeButton articleId={article.id} likes={likes} isLiked = {isLiked}/>
 
           {/* Comments Section */}
           <Card className="p-6">
