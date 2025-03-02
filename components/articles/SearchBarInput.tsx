@@ -2,7 +2,7 @@ import React from 'react'
 
 const SearchBarInput = () => {
   return (
-    <div>SearchBarInput</div>
+    <div></div>
   )
 }
 
