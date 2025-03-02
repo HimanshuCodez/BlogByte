@@ -1,3 +1,4 @@
+import {AllArticles} from "@/components/articles/AllArticles";
 import SearchBarInput from "@/components/articles/SearchBarInput";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, ArrowUpLeftFromSquare } from "lucide-react";
@@ -14,6 +15,7 @@ const page = () => {
           {/* Search Bar */}
           <SearchBarInput/>
         </div>
+        <AllArticles/>
         <div className="mt-12 flex justify-center gap-2">
          <Button variant={'ghost'}><ArrowLeft/>Prev</Button>
           <Button variant={'ghost'} size={'sm'}>1</Button>
