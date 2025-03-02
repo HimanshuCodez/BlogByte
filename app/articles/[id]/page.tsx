@@ -1,4 +1,4 @@
-import ArticleDetailPage from '@/components/articles/ArticleDetailPage'
+import {ArticleDetailPage} from '@/components/articles/ArticleDetailPage'
 import { prisma } from '@/lib/prisma'
 import React from 'react'
 type ArticleDetailPageProps ={

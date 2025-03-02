@@ -7,6 +7,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma"; 
 // import LikeButton from "./actions/like-button";
 import { auth } from "@clerk/nextjs/server";
+import LikeButton from "./LikeButton";
 
 type ArticleDetailPageProps = {
   article: Prisma.ArticlesGetPayload<{
