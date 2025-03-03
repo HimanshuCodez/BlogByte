@@ -1,10 +1,8 @@
 
-
 import { Button } from "@/components/ui/button";
 import React, { Suspense } from "react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import Link from "next/link";
 import { fetchArticleByQuery } from "@/lib/query/fetch-article";
 import ArticleSearchInput from "@/components/articles/SearchBarInput";
