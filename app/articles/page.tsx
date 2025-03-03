@@ -1,7 +1,5 @@
-import {
-  AllArticlesPage, 
-} from "@/components/articles/all-articles-page";
-import ArticleSearchInput from "@/components/articles/article-search-input";
+
+
 import { Button } from "@/components/ui/button";
 import React, { Suspense } from "react";
 import { Card } from "@/components/ui/card";
@@ -9,6 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import Link from "next/link";
 import { fetchArticleByQuery } from "@/lib/query/fetch-article";
+import ArticleSearchInput from "@/components/articles/SearchBarInput";
+import { AllArticlePage } from "@/components/articles/AllArticles";
 
 type SearchPageProps = {
   searchParams: { search?: string; page?: string };
@@ -41,7 +41,7 @@ const page: React.FC<SearchPageProps> = async ({ searchParams }) => {
         </div>
         {/* All article page  */}
         <Suspense fallback={<AllArticlesPageSkeleton/>}>
-        <AllArticlesPage articles={articles} />
+        <AllArticlePage articles={articles}/>
         </Suspense>
         {/* <AllArticlesPageSkeleton/> */}
         {/* Pagination */}
