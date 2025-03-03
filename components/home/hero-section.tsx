@@ -18,7 +18,7 @@ const HeroSection = () => {
         <div className="flex-1 space-y-6 text-center md:text-left">
           <Badge variant="secondary" className="animate-pulse">
             <Sparkles className="mr-2 h-4 w-4" />
-            Welcome to My Blog
+            Welcome to Blog Byte
           </Badge>
           
           <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">

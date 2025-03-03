@@ -11,14 +11,14 @@ import ArticleSearchInput from "@/components/articles/SearchBarInput";
 import { AllArticlePage } from "@/components/articles/AllArticles";
 
 type SearchPageProps = {
-  searchParams: { search?: string; page?: string };
+  searchParams: Promise<{ search?: string; page?: string }>;
 };
 
 const ITEMS_PER_PAGE = 3; // Number of items per page
 
 const page: React.FC<SearchPageProps> = async ({ searchParams }) => {
-  const searchText = searchParams.search || "";
-  const currentPage = Number(searchParams.page) || 1;
+  const searchText = (await searchParams).search || "";
+  const currentPage = Number((await searchParams).page) || 1;
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
   const take = ITEMS_PER_PAGE;
 
