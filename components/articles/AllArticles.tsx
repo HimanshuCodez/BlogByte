@@ -2,25 +2,15 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"; 
 import { Search } from "lucide-react";
 import Image from "next/image";
-import { Prisma } from "@prisma/client";
+import { fetchArticleByQuery } from "@/lib/query/fetch-article";
 
-type SearchPageProps = {
-  articles: Prisma.ArticlesGetPayload<{
-    include:{
-      author:{
-        select:{
-          name:true,
-          email:true,
-          imageUrl:true
-        }
-      }
-    }
-  }>[];
+type AllArticlesPageProps = {
+ searchText:string
 };
 
-export function AllArticlesPage({ articles }: SearchPageProps) {
- 
-  if (!articles) return <h1>no result</h1>;
+export const AllArticlePage : React.FC<AllArticlesPageProps> = async({searchText,})=> {
+ const articles = await  fetchArticleByQuery(searchText)
+  if (!articles) return <NoSearchResults/>;
 
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -67,7 +57,7 @@ export function AllArticlesPage({ articles }: SearchPageProps) {
   );
 }
 
-export function NoSearchResults() {
+export const NoSearchResults =()=>{
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center">
       {/* Icon */}
@@ -88,3 +78,4 @@ export function NoSearchResults() {
     </div>
   );
 }
+ 

@@ -17,6 +17,7 @@ const ArticleSearchInput = () => {
           type="text"
           name="search"
           placeholder="Search articles..."
+          defaultValue={searchParams.get('search') || ""}
           className="w-full pl-10 pr-4 py-6 text-lg"
         />
       </div>
