@@ -1,13 +1,13 @@
-import { Card } from "@/components/ui/card"; 
+import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { MessageCircle } from "lucide-react";
 import { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma"; 
-// import LikeButton from "./actions/like-button";
+import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import LikeButton from "./LikeButton";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
+import { SignIn } from "@clerk/nextjs";
 
 type ArticleDetailPageProps = {
   article: Prisma.ArticlesGetPayload<{
@@ -38,14 +38,26 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
       },
     },
   });
- 
-  const likes = await prisma.like.findMany({where:{articleId:article.id}});
-  const {userId} = await auth();
-  const user = await prisma.user.findUnique({where:{clerkUserId:userId as string}});
+
+  const likes = await prisma.like.findMany({
+    where: { articleId: article.id },
+  });
+  const { userId } = await auth();
+  if (!userId) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+       
+        <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+          <SignIn />
+        </div>
+      </div>
+    );
+  }
+  const user = await prisma.user.findUnique({
+    where: { clerkUserId: userId as string },
+  });
 
   const isLiked = likes.some((like) => like.userId === user?.id);
-  
-  
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,7 +100,7 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
           />
 
           {/* Article Actions */}
-          <LikeButton articleId={article.id} likes={likes} isLiked = {isLiked}/>
+          <LikeButton articleId={article.id} likes={likes} isLiked={isLiked} />
 
           {/* Comments Section */}
           <Card className="p-6">
@@ -99,11 +111,11 @@ export async function ArticleDetailPage({ article }: ArticleDetailPageProps) {
               </h2>
             </div>
 
-           {/* Comment Form*/}
-            <CommentForm articleId={article.id} /> 
+            {/* Comment Form*/}
+            <CommentForm articleId={article.id} />
 
             {/* Comments List */}
-            <CommentList comments={comments} /> 
+            <CommentList comments={comments} />
           </Card>
         </article>
       </main>
